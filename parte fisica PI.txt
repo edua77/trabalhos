@@ -1,0 +1,47 @@
+create table departamentos(
+id_departamento number (3),
+nome_departamento varchar2 (30) constraint departementos_nm_dp_nn not null,
+constraint departamentos_id_dp_pk primary key (id_departamento)
+);
+
+create table cargos(
+id_cargo number (3),
+nome_cargo varchar2 (30) constraint cargos_nm_cargo_nn not null,
+id_departamento number (3),
+constraint cargos_id_cargo_pk primary key (id_cargo),
+constraint cargos_id_departamento_fk foreign key (id_departamento) references departamentos (id_departamento)
+);
+
+create table pais(
+id_pais number (3),
+nome_pais varchar2 (30) constraint pais_nm_pais_nn not null,
+constraint pais_id_pais_pk primary key (id_pais)
+);
+
+create table locais(
+id_local number (3),
+id_pais number (3),
+estado varchar2 (30) constraint locais_estado_nn not null,
+cidade varchar2 (30) constraint locais_cidade_nn not null,
+rua varchar2 (50) constraint locais_rua_nn not null,
+cep number (10) constraint locais_cep_nn not null,
+constraint locais_id_local_pk primary key (id_local),
+constraint locais_id_pais_fk foreign key (id_pais) references pais (id_pais)
+);
+
+create table funcionarios(
+id_funcionario number (3),
+id_departamento number (3),
+id_cargo number (3),
+id_local number (3),
+nome varchar2 (30) constraint funcionarios_nome_nn not null,
+sobrenome varchar2 (30) constraint funcionarios_sobrenome_nn not null,
+cpf number (13) constraint funcionarios_cpf_nn not null,
+salario number (3,3) constraint funcionarios_salario_nn not null,
+email varchar2 (60) constraint funcionarios_email_nn not null,
+telefone number (16) constraint funcionarios_telefone_nn not null,
+constraint funcionarios_id_func_pk primary key (id_funcionario),
+constraint funcionarios_id_dp_fk foreign key (id_departamento) references departamentos (id_departamento),
+constraint funcionarios_id_cargo_fk foreign key (id_cargo) references cargos (id_cargo),
+constraint funcionarios_id_local_fk foreign key (id_local) references locais (id_local)
+);
